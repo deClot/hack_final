@@ -143,3 +143,9 @@ def preprocess(data, data_all):
     data = join_datas(data, credit, 'credit')
     data = data.reset_index()
     return data
+
+
+def upload(new_data, name):
+    data = pd.read_excel(name + '.xlsx')
+    data = data.append(new_data, ignore_index=True)
+    data.to_excel(name + '.xlsx')

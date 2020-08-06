@@ -1,30 +1,26 @@
 from flask import Flask, request
 import pandas as pd
-from lib import preprocess, predict_model, pca_decompose, train_model
+from lib import preprocess, predict_model, pca_decompose, train_model, upload
 
 app = Flask(__name__)
 if __name__ == '__main__':
     app.run()
 
 @app.route('/upload/data', methods=['POST'])
-def upload_file():
+def upload_data():
     if request.method == 'POST':
         file = request.files['data.xlsx']
         new_data = pd.read_excel(file)
-        data = pd.read_excel('data.xlsx')
-        data = data.append(new_data, ignore_index=True)
-        data.to_excel('data.xlsx')
+        upload(new_data, 'data')
     return 'Loaded'
 
 
 @app.route('/upload/trans', methods=['POST'])
-def upload_file():
+def upload_trans():
     if request.method == 'POST':
         file = request.files['trans.xlsx']
         new_data = pd.read_excel(file)
-        data = pd.read_excel('trans.xlsx')
-        data = data.append(new_data, ignore_index=True)
-        data.to_excel('trans.xlsx')
+        upload(new_data, 'trans')
     return 'Loaded'
 
 
